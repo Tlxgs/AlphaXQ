@@ -1,4 +1,4 @@
-// Human (red) vs the compact MLP at fixed depth 3.
+// Human (red) vs the compact MLP at fixed depth 4.
 import {
   Board, RED, PIECE_CHAR, MOVE_DST, moveDst, squareName,
 } from "./engine.js";

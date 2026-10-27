@@ -1,9 +1,9 @@
 {
  "format": 1,
- "checkpoint": "xiangqi_ai/models/epoch_1230.pt",
- "epoch": 1230,
+ "checkpoint": "models/epoch_1720.pt",
+ "epoch": 1720,
  "localEpoch": 10,
- "valMse": 0.04190530255436897,
+ "valMse": 0.046329315751791,
  "inputDim": 693,
  "sideFeature": 692,
  "layers": [
@@ -1458,6 +1458,6 @@
   691
  ],
  "bytes": 982532,
- "sha256": "97405ec4aab8b091227e5b46a111fc1f87e55eb7861684b0bb5271b5e0cb8219",
- "created": "2026-10-26 16:51:25"
+ "sha256": "53ab03edbdefc91e099a905daea1aa2f8aebc3c79a60da4c4a140ed39b3750f8",
+ "created": "2026-10-27 13:44:46"
 }

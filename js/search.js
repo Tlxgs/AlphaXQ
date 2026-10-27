@@ -65,7 +65,7 @@ export class Search {
   }
 
   // seenPositions: optional Set of exact position keys for the repetition rule.
-  search(board, depth = 3, seenPositions = null) {
+  search(board, depth = 4, seenPositions = null) {
     const started = performance.now();
     this.resetSearch();
     const buf = this.moveBufs[0];

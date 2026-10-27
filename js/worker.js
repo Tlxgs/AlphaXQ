@@ -3,6 +3,8 @@ import { loadMLP } from "./mlp.js";
 import { Board, moveSrc, moveDst } from "./engine.js";
 import { Search } from "./search.js";
 
+const SEARCH_DEPTH = 4; // change to 3 or 5 here if needed
+
 let mlp = null;
 let search = null;
 
@@ -34,7 +36,7 @@ self.onmessage = (ev) => {
       board.loadFlat(msg.flat, msg.side);
       const seen = msg.seen ? new Set(msg.seen) : null;
       const started = performance.now();
-      const result = search.search(board, 3, seen);
+      const result = search.search(board, SEARCH_DEPTH, seen);
       const move = result.move === null ? null : [moveSrc(result.move), moveDst(result.move)];
       self.postMessage({
         type: "result",
