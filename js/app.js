@@ -102,10 +102,10 @@ function updateStatus() {
   let text = "";
   let cls = "status";
   if (loadError) {
-    text = "模型加载失败";
+    text = "加载失败";
     cls += " error";
   } else if (!ready) {
-    text = "正在加载棋力…";
+    text = "加载中…";
   } else if (gameOver) {
     text = gameOverText;
     cls += " over";
@@ -114,7 +114,7 @@ function updateStatus() {
     cls += " thinking";
   } else {
     const side = board.side === RED ? "红方" : "黑方";
-    text = board.inCheck(board.side) ? side + "被将军！" : side + "走棋";
+    text = board.inCheck(board.side) ? side + "被将军" : side + "走棋";
   }
   statusEl.className = cls;
   statusEl.textContent = text;
@@ -248,17 +248,13 @@ function roundRectPath(x, y, w, h, r) {
 }
 
 function drawBoard() {
-  const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, "#f1d9a8");
-  bg.addColorStop(0.48, "#e8c98d");
-  bg.addColorStop(1, "#dcb873");
-  ctx.fillStyle = bg;
+  ctx.fillStyle = "#f4f3ee";
   ctx.fillRect(0, 0, W, H);
 
-  // A quiet paper grain, no images required.
+  // Very quiet paper grain.
   ctx.save();
-  ctx.globalAlpha = 0.045;
-  ctx.strokeStyle = "#6d4523";
+  ctx.globalAlpha = 0.032;
+  ctx.strokeStyle = "#4b4a45";
   ctx.lineWidth = 1;
   for (let y = 8; y < H; y += 13) {
     ctx.beginPath();
@@ -268,8 +264,8 @@ function drawBoard() {
   }
   ctx.restore();
 
-  ctx.strokeStyle = "#70451f";
-  ctx.lineWidth = 2;
+  ctx.strokeStyle = "#5d5c57";
+  ctx.lineWidth = 1.4;
 
   for (let r = 0; r < 10; r++) {
     ctx.beginPath();
@@ -294,11 +290,11 @@ function drawBoard() {
     }
   }
 
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 2.2;
   ctx.strokeRect(xOf(0), yOf(0), CELL * 8, CELL * 9);
 
   // Palaces.
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 1.4;
   ctx.beginPath();
   ctx.moveTo(xOf(3), yOf(0)); ctx.lineTo(xOf(5), yOf(2));
   ctx.moveTo(xOf(5), yOf(0)); ctx.lineTo(xOf(3), yOf(2));
@@ -308,8 +304,8 @@ function drawBoard() {
 
   // River.
   ctx.save();
-  ctx.fillStyle = "rgba(91, 55, 26, .74)";
-  ctx.font = '600 27px "KaiTi", "STKaiti", "SimSun", serif';
+  ctx.fillStyle = "rgba(70, 69, 64, .58)";
+  ctx.font = '500 22px "KaiTi", "STKaiti", "SimSun", serif';
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText("楚 河", xOf(2), yOf(4.5));
@@ -326,10 +322,10 @@ function drawLastMove() {
     const cy = yOf((sq / 9) | 0);
     ctx.beginPath();
     ctx.arc(cx, cy, PIECE_R + 5, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(231, 169, 52, .24)";
+    ctx.fillStyle = "rgba(31, 31, 29, .055)";
     ctx.fill();
-    ctx.strokeStyle = "rgba(154, 99, 31, .42)";
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = "rgba(31, 31, 29, .22)";
+    ctx.lineWidth = 1.2;
     ctx.stroke();
   }
 }
@@ -340,31 +336,27 @@ function drawPiece(sq, piece) {
   const red = piece > 0;
 
   ctx.save();
-  ctx.shadowColor = "rgba(59, 34, 14, .42)";
-  ctx.shadowBlur = 7;
-  ctx.shadowOffsetY = 3;
+  ctx.shadowColor = "rgba(0, 0, 0, .14)";
+  ctx.shadowBlur = 4;
+  ctx.shadowOffsetY = 2;
 
-  const fill = ctx.createRadialGradient(cx - 9, cy - 11, 4, cx, cy, PIECE_R + 2);
-  fill.addColorStop(0, "#fff9e9");
-  fill.addColorStop(0.58, "#f4e2ba");
-  fill.addColorStop(1, "#dcba7d");
   ctx.beginPath();
   ctx.arc(cx, cy, PIECE_R, 0, Math.PI * 2);
-  ctx.fillStyle = fill;
+  ctx.fillStyle = red ? "#fbfaf6" : "#242422";
   ctx.fill();
   ctx.shadowColor = "transparent";
 
-  ctx.strokeStyle = red ? "#a34c35" : "#4a4138";
-  ctx.lineWidth = 2.3;
+  ctx.strokeStyle = red ? "#45443f" : "#101010";
+  ctx.lineWidth = 1.8;
   ctx.stroke();
 
   ctx.beginPath();
   ctx.arc(cx, cy, PIECE_R - 4.2, 0, Math.PI * 2);
-  ctx.strokeStyle = red ? "rgba(165, 66, 45, .48)" : "rgba(60, 52, 44, .42)";
-  ctx.lineWidth = 1.1;
+  ctx.strokeStyle = red ? "rgba(45, 45, 41, .30)" : "rgba(244, 243, 238, .32)";
+  ctx.lineWidth = 1;
   ctx.stroke();
 
-  ctx.fillStyle = red ? "#b12f23" : "#211d19";
+  ctx.fillStyle = red ? "#262623" : "#f4f3ee";
   ctx.font = '700 35px "KaiTi", "STKaiti", "KaiTi_GB2312", "SimSun", serif';
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -379,10 +371,8 @@ function drawSelectionAndTargets() {
     ctx.save();
     ctx.beginPath();
     ctx.arc(cx, cy, PIECE_R + 4, 0, Math.PI * 2);
-    ctx.strokeStyle = "#d9a441";
-    ctx.lineWidth = 4;
-    ctx.shadowColor = "rgba(217, 164, 65, .55)";
-    ctx.shadowBlur = 10;
+    ctx.strokeStyle = "#1b1b19";
+    ctx.lineWidth = 2.5;
     ctx.stroke();
     ctx.restore();
   }
@@ -393,17 +383,17 @@ function drawSelectionAndTargets() {
     const cy = yOf((dst / 9) | 0);
     if (board.flat[dst] === 0) {
       ctx.beginPath();
-      ctx.arc(cx, cy, 8, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(45, 88, 48, .58)";
+      ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(31, 31, 29, .52)";
       ctx.fill();
-      ctx.strokeStyle = "rgba(255, 245, 216, .5)";
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = "rgba(251, 250, 247, .62)";
+      ctx.lineWidth = 1;
       ctx.stroke();
     } else {
       ctx.beginPath();
       ctx.arc(cx, cy, PIECE_R + 3, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(171, 49, 37, .78)";
-      ctx.lineWidth = 3;
+      ctx.strokeStyle = "rgba(31, 31, 29, .55)";
+      ctx.lineWidth = 2;
       ctx.stroke();
     }
   }
@@ -418,10 +408,9 @@ function drawCheck() {
   ctx.save();
   ctx.beginPath();
   ctx.arc(cx, cy, PIECE_R + 7, 0, Math.PI * 2);
-  ctx.strokeStyle = "rgba(189, 40, 30, .9)";
-  ctx.lineWidth = 3.5;
-  ctx.shadowColor = "rgba(189, 40, 30, .62)";
-  ctx.shadowBlur = 12;
+  ctx.strokeStyle = "#111";
+  ctx.lineWidth = 2.2;
+  ctx.setLineDash([4, 3]);
   ctx.stroke();
   ctx.restore();
 }
